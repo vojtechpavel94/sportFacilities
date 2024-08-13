@@ -1,0 +1,10 @@
+package cz.expertkom.sportFacilities.dto;
+
+import lombok.Data;
+
+@Data
+public class UserDto {
+    private String email;
+    private String password;
+    private int roleId;
+}
