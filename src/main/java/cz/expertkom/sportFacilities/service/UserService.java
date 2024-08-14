@@ -26,11 +26,11 @@ public class UserService {
     }
 
     public List<UserDto> getAll() {
-        List<UserDto> list = new ArrayList<>();
+        /*List<UserDto> list = new ArrayList<>();
         for (User user : userRepository.findAll()) {
             UserDto dto = userMapper.toDto(user);
             list.add(dto);
-        }
+        }*/
         log.info("#US&ga01: getAll called");
         //return list;
         return userRepository.findAll().stream().map(userMapper::toDto).toList();
