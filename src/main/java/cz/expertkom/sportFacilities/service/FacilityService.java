@@ -33,12 +33,7 @@ public class FacilityService {
 
         facility.setName(facilityRegisterDto.getName());
         facility.setCity(facilityRegisterDto.getCity());
-        facility.setPricing(facilityRegisterDto.getPricing());
-
-        //Až promyslím, jestli přidat registrování managerId
-        //Facility fs = facilityService.getAll();
-        //facility.setFacilityId(fs);
-        //facility.setCreatedAt(new Date());
+        //acility.setPricing(facilityRegisterDto.getPricing());
 
         return facilityRepository.save(facility);
     }

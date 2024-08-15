@@ -10,7 +10,7 @@ public class FacilityMapper {
         FacilityDto facilityDto = new FacilityDto();
         facilityDto.setName(facility.getName());
         facilityDto.setCity(facility.getCity());
-        facilityDto.setPricing(facility.getPricing());
+        //facilityDto.setPricing(facility.getPricing());
 
         return facilityDto;
     }

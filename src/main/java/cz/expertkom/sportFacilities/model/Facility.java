@@ -2,6 +2,7 @@ package cz.expertkom.sportFacilities.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -11,10 +12,17 @@ public class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int facilityId;
-    @NotBlank
+    @NotNull
     private String name;
-    private int pricing;
+    //@NotNull
+    //private int pricing;
+    @NotNull
     private String city;
+/*
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pricingId", referencedColumnName = "pricingId")
+    @NotNull // Use @NotNull for object references
+    private Pricing pricingId;*/
 
     /*@ManyToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "managerId", referencedColumnName = "managerId")

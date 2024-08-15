@@ -8,7 +8,6 @@ import cz.expertkom.sportFacilities.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @Service
@@ -39,7 +38,6 @@ public class UserService {
     public User registerUser (UserRegisterDto userRegisterDto){
         log.info("#US&ru01: registerUser called, userRegisterDto={}", userRegisterDto);
         User user = new User();
-
         user.setPassword(userRegisterDto.getPassword());
         user.setEmail(userRegisterDto.getEmail());
         user.setUsername(userRegisterDto.getUsername());
@@ -48,7 +46,14 @@ public class UserService {
         user.setRoleId(rs);
         user.setCreatedAt(new Date());
 
+
         return userRepository.save(user);
+
+
+        //User userEntity = userMapper.toEntity(userRegisterDto);
+        //return userRepository.save(userEntity);
+
+
     }
 
 }
