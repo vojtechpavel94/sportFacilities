@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @RestController //provolávání jen z PostMana
-@RequestMapping("/users") //možná lepší mít /api/v1/users
+@RequestMapping("/api/v1/users") //možná lepší mít /api/v1/users
 @Slf4j
 public class UserController {
     //využití mezi vrstvy v podobě Service - slouží pro naplnění objektu daty z FE o uživateli

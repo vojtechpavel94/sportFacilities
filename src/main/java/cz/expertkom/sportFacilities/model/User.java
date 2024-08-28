@@ -19,17 +19,15 @@ import java.util.Date;
     @Column(nullable = false)
     private String email;
 
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "roleId", referencedColumnName = "roleId")
-    @NotNull // Use @NotNull for object references
+    @NotNull
     private UserRole roleId;
 
     @Column(nullable = false, length = 50)
     @NotBlank
     private String username;
 
-    @Column(nullable = false)
     @NotBlank
     private String password;
 

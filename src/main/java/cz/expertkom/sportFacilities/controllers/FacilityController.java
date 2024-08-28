@@ -1,47 +1,49 @@
 package cz.expertkom.sportFacilities.controllers;
 
 import cz.expertkom.sportFacilities.dto.FacilityDto;
-import cz.expertkom.sportFacilities.dto.FacilityRegisterDto;
-import cz.expertkom.sportFacilities.dto.UserDto;
-import cz.expertkom.sportFacilities.model.Facility;
-import cz.expertkom.sportFacilities.model.Pricing;
-import cz.expertkom.sportFacilities.model.UserRole;
 import cz.expertkom.sportFacilities.service.FacilityService;
-import cz.expertkom.sportFacilities.service.PricingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController //provolávání jen z PostMana
-@RequestMapping("/facilities") //možná lepší mít /api/v1/users
+@RequestMapping("/api/v1/facilities") //možná lepší mít /api/v1/users
 @Slf4j
 public class FacilityController {
-    private final FacilityService facilityService;
-
-    private final PricingService pricingService;
-
     @Autowired
-    public FacilityController (FacilityService facilityService, PricingService pricingService) {
-        this.facilityService = facilityService;
-        this.pricingService = pricingService;
-    }
-
-    @PostMapping
-    public Facility registerFacility(@RequestBody FacilityRegisterDto facilityRegisterDto){
-        return facilityService.registerFacility(facilityRegisterDto);
-    }
+    private FacilityService facilityService;
 
     @GetMapping
     public List<FacilityDto> getAllFacilities() {
         log.info("#FC&gu01: getAllFacilities called");
-        return facilityService.getAll();
+        return facilityService.getAllFacilities();
     }
-    //získej cenu sportoviště na základě id
-    @GetMapping("/{facilityId}/price")
-    public Pricing getPrice(@PathVariable Integer facilityId) {
-        log.info("#FC&gp01: getPrice called with facilityId: {}", facilityId);
-        return pricingService.getPrice(facilityId);
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FacilityDto> getFacilityById(@PathVariable int id) {
+        FacilityDto FacilityDto = facilityService.getFacilityById(id);
+        return new ResponseEntity<>(FacilityDto, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<FacilityDto> createFacility(@RequestBody FacilityDto FacilityDto) {
+        FacilityDto createdFacility = facilityService.createFacility(FacilityDto);
+        return new ResponseEntity<>(createdFacility, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<FacilityDto> updateFacility(@PathVariable int id, @RequestBody FacilityDto FacilityDto) {
+        FacilityDto updatedFacility = facilityService.updateFacility(id, FacilityDto);
+        return new ResponseEntity<>(updatedFacility, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteFacility(@PathVariable int id) {
+        facilityService.deleteFacility(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
