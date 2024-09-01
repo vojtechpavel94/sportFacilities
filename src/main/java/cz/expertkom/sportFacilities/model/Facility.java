@@ -37,8 +37,8 @@ public class Facility {
     private Integer lastEditedBy;
     private Boolean indoor;
     private Boolean lighting;
-    private BigDecimal longitude;
-    private BigDecimal latitude;
+    private double longitude;
+    private double latitude;
     private String photos;
     private BigDecimal rating;
     private String description;

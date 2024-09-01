@@ -1,7 +1,9 @@
 package cz.expertkom.sportFacilities.controllers;
 
 import cz.expertkom.sportFacilities.dto.FacilityDto;
+import cz.expertkom.sportFacilities.model.Facility;
 import cz.expertkom.sportFacilities.service.FacilityService;
+import cz.expertkom.sportFacilities.service.WeatherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,8 @@ import java.util.List;
 public class FacilityController {
     @Autowired
     private FacilityService facilityService;
+    @Autowired
+    private WeatherService weatherService;
 
     @GetMapping
     public List<FacilityDto> getAllFacilities() {
@@ -45,5 +49,15 @@ public class FacilityController {
     public ResponseEntity<Void> deleteFacility(@PathVariable int id) {
         facilityService.deleteFacility(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    //Weather
+    @GetMapping("/{id}/weather")
+    public String getFacilityWeather(@PathVariable int id) {
+        log.info("#FC&gfw01: getFacilityWeather called");
+        // Get facility
+        FacilityDto facility = facilityService.getFacilityById(id);
+        // Get weather data using the facility's latitude and longitude
+        return weatherService.getWeather(facility.getLatitude(), facility.getLongitude());
     }
 }
