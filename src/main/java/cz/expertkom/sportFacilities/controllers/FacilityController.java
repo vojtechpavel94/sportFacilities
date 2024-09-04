@@ -1,7 +1,6 @@
 package cz.expertkom.sportFacilities.controllers;
 
 import cz.expertkom.sportFacilities.dto.FacilityDto;
-import cz.expertkom.sportFacilities.model.Facility;
 import cz.expertkom.sportFacilities.service.FacilityService;
 import cz.expertkom.sportFacilities.service.WeatherService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +15,14 @@ import java.util.List;
 @RequestMapping("/api/v1/facilities") //možná lepší mít /api/v1/users
 @Slf4j
 public class FacilityController {
-    @Autowired
-    private FacilityService facilityService;
-    @Autowired
-    private WeatherService weatherService;
+    private final WeatherService weatherService;
+    private final FacilityService facilityService;
+
+    //use Autowired or create constructor in classic way
+    public FacilityController(WeatherService weatherService, FacilityService facilityService) {
+        this.weatherService = weatherService;
+        this.facilityService = facilityService;
+    }
 
     @GetMapping
     public List<FacilityDto> getAllFacilities() {
@@ -29,19 +32,19 @@ public class FacilityController {
 
     @GetMapping("/{id}")
     public ResponseEntity<FacilityDto> getFacilityById(@PathVariable int id) {
-        FacilityDto FacilityDto = facilityService.getFacilityById(id);
-        return new ResponseEntity<>(FacilityDto, HttpStatus.OK);
+        FacilityDto facilityDto = facilityService.getFacilityById(id);
+        return new ResponseEntity<>(facilityDto, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<FacilityDto> createFacility(@RequestBody FacilityDto FacilityDto) {
-        FacilityDto createdFacility = facilityService.createFacility(FacilityDto);
+    public ResponseEntity<FacilityDto> createFacility(@RequestBody FacilityDto facilityDto) {
+        FacilityDto createdFacility = facilityService.createFacility(facilityDto);
         return new ResponseEntity<>(createdFacility, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FacilityDto> updateFacility(@PathVariable int id, @RequestBody FacilityDto FacilityDto) {
-        FacilityDto updatedFacility = facilityService.updateFacility(id, FacilityDto);
+    public ResponseEntity<FacilityDto> updateFacility(@PathVariable int id, @RequestBody FacilityDto facilityDto) {
+        FacilityDto updatedFacility = facilityService.updateFacility(id, facilityDto);
         return new ResponseEntity<>(updatedFacility, HttpStatus.OK);
     }
 
