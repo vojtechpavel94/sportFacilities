@@ -55,6 +55,7 @@ public class FacilityController {
     }
 
     //Weather
+    /*
     @GetMapping("/{id}/weather")
     public String getFacilityWeather(@PathVariable int id) {
         log.info("#FC&gfw01: getFacilityWeather called");
@@ -62,5 +63,17 @@ public class FacilityController {
         FacilityDto facility = facilityService.getFacilityById(id);
         // Get weather data using the facility's latitude and longitude
         return weatherService.getWeather(facility.getLatitude(), facility.getLongitude());
+    }*/
+
+    @GetMapping("/{id}/weather")
+    public ResponseEntity<String> getFacilityWeather(
+            @PathVariable int id,
+            @RequestParam String dt) {
+        log.info("#FC&gfw01: getFacilityWeather called with date= {}", dt);
+        //get facility
+        FacilityDto facility = facilityService.getFacilityById(id);
+        //latitude, longitude, date
+        String weatherData = weatherService.getWeather(facility.getLatitude(), facility.getLongitude(), dt);
+        return ResponseEntity.ok(weatherData);
     }
 }

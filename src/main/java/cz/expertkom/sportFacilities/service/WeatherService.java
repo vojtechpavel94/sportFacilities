@@ -10,16 +10,19 @@ import org.springframework.web.client.RestTemplate;
 public class WeatherService {
     private final String apiKey;
     private final RestTemplate restTemplate = new RestTemplate();
+    //Dotenv - využití dependency pro schování klíče v .env file, měl jsem tam security problém při pushi do gitu.
     public WeatherService() {
         Dotenv dotenv = Dotenv.load();
         this.apiKey = dotenv.get("WEATHER_API_KEY");
     }
-    // Use the apiKey in your methods
-    public String getWeather ( double latitude, double longitude){
-        log.info("#WS&gw01: getWeather called, latitude= {}, longitude= {}", latitude, longitude);
+    //TODO - přidat datum
+    public String getWeather(double latitude, double longitude, String dt) {
+        log.info("#WS&gw01: getWeather called, latitude= {}, longitude= {}, date= {}", latitude, longitude, dt);
+
         String url = String.format(
-                "https://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&appid=%s&units=metric&lang=cz",
-                latitude, longitude, apiKey);
+                "http://api.weatherapi.com/v1/history.json?key=%s&q=%f,%f&dt=%s",
+                apiKey, latitude, longitude, dt);
+
         return restTemplate.getForObject(url, String.class);
     }
 }
