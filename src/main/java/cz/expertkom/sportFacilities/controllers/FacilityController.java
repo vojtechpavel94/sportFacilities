@@ -1,10 +1,10 @@
 package cz.expertkom.sportFacilities.controllers;
 
 import cz.expertkom.sportFacilities.dto.FacilityDto;
+import cz.expertkom.sportFacilities.dto.WeatherDto;
 import cz.expertkom.sportFacilities.service.FacilityService;
 import cz.expertkom.sportFacilities.service.WeatherService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,15 +65,15 @@ public class FacilityController {
         return weatherService.getWeather(facility.getLatitude(), facility.getLongitude());
     }*/
 
-    @GetMapping("/{id}/weather")
+    @PostMapping("/{id}/weather")
     public ResponseEntity<String> getFacilityWeather(
             @PathVariable int id,
-            @RequestParam String dt) {
-        log.info("#FC&gfw01: getFacilityWeather called with date= {}", dt);
+            @RequestBody WeatherDto weatherRequest) {
+        log.info("#FC&gfw01: getFacilityWeather called with date= {}", weatherRequest.getDate());
         //get facility
         FacilityDto facility = facilityService.getFacilityById(id);
         //latitude, longitude, date
-        String weatherData = weatherService.getWeather(facility.getLatitude(), facility.getLongitude(), dt);
+        String weatherData = weatherService.getWeather(facility.getLatitude(), facility.getLongitude(), weatherRequest.getDate());
         return ResponseEntity.ok(weatherData);
     }
 }
