@@ -69,11 +69,11 @@ public class FacilityController {
     public ResponseEntity<String> getFacilityWeather(
             @PathVariable int id,
             @RequestBody WeatherDto weatherRequest) {
-        log.info("#FC&gfw01: getFacilityWeather called with date= {}", weatherRequest.getDate());
+        log.info("#FC&gfw01: getFacilityWeather called with date= {}", weatherRequest.getStartHour(), weatherRequest.getEndHour());
         //get facility
         FacilityDto facility = facilityService.getFacilityById(id);
         //latitude, longitude, date
-        String weatherData = weatherService.getWeather(facility.getLatitude(), facility.getLongitude(), weatherRequest.getDate());
+        String weatherData = weatherService.getWeather(facility.getLatitude(), facility.getLongitude(), weatherRequest.getStartHour(),weatherRequest.getEndHour());
         return ResponseEntity.ok(weatherData);
     }
 }

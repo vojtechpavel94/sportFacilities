@@ -15,14 +15,30 @@ public class WeatherService {
         Dotenv dotenv = Dotenv.load();
         this.apiKey = dotenv.get("WEATHER_API_KEY");
     }
-    //TODO - přidat datum
-    public String getWeather(double latitude, double longitude, String dt) {
-        log.info("#WS&gw01: getWeather called, latitude= {}, longitude= {}, date= {}", latitude, longitude, dt);
 
-        String url = String.format(
+    /*public String getWeather(double latitude, double longitude, String dt, String dt2) {
+        log.info("#WS&gw01: getWeather called, latitude= {}, longitude= {}, date= {}", latitude, longitude, dt);*/
+
+        /*String url = String.format(
                 "http://api.weatherapi.com/v1/history.json?key=%s&q=%f,%f&dt=%s",
                 apiKey, latitude, longitude, dt);
 
-        return restTemplate.getForObject(url, String.class);
-    }
+            return restTemplate.getForObject(url, String.class);
+        }
+    }*/
+
+   public String getWeather(float latitude, float longitude, String startHour, String endHour) {
+       log.info("#WS&gw01: getWeather called, latitude= {}, longitude= {}, startHour= {}, endHour= {}", latitude, longitude, startHour, endHour);
+
+       String url = String.format(
+               "https://api.open-meteo.com/v1/forecast?latitude=%s&longitude=%s&start_hour=%s&end_hour=%s&hourly=temperature_2m",
+               latitude, longitude, startHour, endHour
+       );
+
+       log.info("URL: {}", url);
+       String response = restTemplate.getForObject(url, String.class);
+       log.info("API Response: {}", response);
+
+       return response;
+   }
 }

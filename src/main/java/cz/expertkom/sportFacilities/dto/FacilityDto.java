@@ -18,8 +18,8 @@ public class FacilityDto {
     private int managerId; // FK
     private Boolean indoor;
     private Boolean lighting;
-    private double longitude;
-    private double latitude;
+    private float longitude;
+    private float latitude;
     private String photos;
     private BigDecimal rating;
     private String description;
