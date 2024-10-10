@@ -38,7 +38,7 @@ public class UserService {
     public User registerUser (UserRegisterDto userRegisterDto){
         log.info("#US&ru01: registerUser called, userRegisterDto={}", userRegisterDto);
         User user = new User();
-        user.setPassword(userRegisterDto.getPassword());
+        user.setPasswordHash(userRegisterDto.getPassword());
         user.setEmail(userRegisterDto.getEmail());
         user.setUsername(userRegisterDto.getUsername());
 

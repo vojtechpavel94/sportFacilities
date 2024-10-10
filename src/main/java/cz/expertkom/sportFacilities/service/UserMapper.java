@@ -11,7 +11,7 @@ public class UserMapper {
     public UserDto toDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setEmail(user.getEmail());
-        userDto.setPassword(user.getPassword());
+        userDto.setPassword(user.getPasswordHash());
         userDto.setRoleId(user.getRoleId().getRoleId());
 
         return userDto;
@@ -20,7 +20,7 @@ public class UserMapper {
     public User toEntity(UserRegisterDto userDto) {
         User user = new User();
         user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
+        user.setPasswordHash(userDto.getPassword());
 
         /*user.setUsername(userDto.getUsername());
         UserRole role = roleRepository.findById(userDto.getRoleId()).orElseThrow();

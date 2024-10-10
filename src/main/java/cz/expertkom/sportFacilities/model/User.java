@@ -29,7 +29,9 @@ import java.util.Date;
     private String username;
 
     @NotBlank
-    private String password;
+    //private String password;
+    @Column (name="password")
+    private String passwordHash;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date createdAt;
