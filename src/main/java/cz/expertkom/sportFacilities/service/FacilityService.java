@@ -1,7 +1,6 @@
 package cz.expertkom.sportFacilities.service;
 
 import cz.expertkom.sportFacilities.dto.FacilityDto;
-import cz.expertkom.sportFacilities.dto.FacilityRegisterDto;
 import cz.expertkom.sportFacilities.exception.ResourceNotFoundException;
 import cz.expertkom.sportFacilities.model.Facility;
 import cz.expertkom.sportFacilities.repository.FacilityRepository;
