@@ -20,11 +20,11 @@ public class ReservationService {
     public ReservationDto createReservation(ReservationDto reservationDto) {
         Reservation reservation = reservationMapper.toEntity(reservationDto);
         Reservation savedReservation = reservationRepository.save(reservation);
-        return reservationMapper.toDTO(savedReservation);
+        return reservationMapper.toDto(savedReservation);
     }
 
     public List<ReservationDto> getAllReservations() {
         return reservationRepository.findAll().stream()
-                .map(reservationMapper::toDTO).toList();
+                .map(reservationMapper::toDto).toList();
     }
 }

@@ -15,7 +15,7 @@ public class ReservationMapper {
     private final UserRepository userRepository;
     private final FacilityRepository facilityRepository;
 
-    public ReservationDto toDTO(Reservation reservation) {
+    public ReservationDto toDto(Reservation reservation) {
         ReservationDto dto = new ReservationDto();
         dto.setStartTime(reservation.getStartTime());
         dto.setEndTime(reservation.getEndTime());
