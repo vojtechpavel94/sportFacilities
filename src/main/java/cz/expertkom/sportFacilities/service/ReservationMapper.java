@@ -24,7 +24,8 @@ public class ReservationMapper {
         dto.setStatus(reservation.getStatus());
         dto.setStartDate(new java.sql.Date(reservation.getStartDate().getTime()));
         dto.setPaymentMethod(reservation.getPaymentMethod());
-        dto.setContact(reservation.getContact());
+        //dto.setContact(reservation.getContact());
+        dto.setEmail(reservation.getUserId().getEmail());
         return dto;
     }
 
@@ -43,10 +44,10 @@ public class ReservationMapper {
         reservation.setFacilityId(facility);
         reservation.setStartTime(dto.getStartTime());
         reservation.setEndTime(dto.getEndTime());
-        reservation.setStatus(dto.getStatus());
+        reservation.setStatus(/*dto.getStatus()*/ "waiting_for_accepting");
         reservation.setStartDate(dto.getStartDate());
         reservation.setPaymentMethod(dto.getPaymentMethod());
-        reservation.setContact(dto.getContact());
+        //reservation.setContact(dto.getContact());
         return reservation;
     }
 }

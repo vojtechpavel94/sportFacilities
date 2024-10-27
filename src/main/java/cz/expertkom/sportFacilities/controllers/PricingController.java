@@ -50,18 +50,4 @@ public class PricingController {
     public ResponseEntity<Pricing> updateFacility(@PathVariable int id, @RequestBody Pricing pricing) {
         return new ResponseEntity<>(pricingService.updatePricing(id, pricing), HttpStatus.OK);
     }
-
-    //old version
-    /*@GetMapping("/{id}")
-    public Pricing getPrice(@PathVariable Integer id) {
-        log.info("#FC&gp01: getPrice called with facilityId: {}", id);
-        return pricingService.getPrice(id);
-    }
-    //získej cenu sportoviště na základě id
-    @GetMapping("/{facilityId}/price")
-    public Pricing getPriceById(@PathVariable Integer facilityId) {
-        log.info("#PC&gpi01: getPrice called with facilityId: {}", facilityId);
-        return pricingService.getPriceById(facilityId);
-    }*/
-
 }

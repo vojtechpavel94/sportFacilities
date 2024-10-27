@@ -13,5 +13,6 @@ public class ReservationDto {
     private String status;
     private Date startDate;
     private String paymentMethod;
-    private String contact;
+    //private String contact;
+    private String email;
 }

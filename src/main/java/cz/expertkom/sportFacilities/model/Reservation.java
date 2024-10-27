@@ -45,6 +45,6 @@ import java.util.Date;
         @Column
         private String paymentMethod;
 
-        @Column
-        private String contact;
+        //@Column
+        //private String contact;
 }
