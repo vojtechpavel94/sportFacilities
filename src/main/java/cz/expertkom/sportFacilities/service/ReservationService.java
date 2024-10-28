@@ -31,10 +31,19 @@ public class ReservationService {
                 .map(reservationMapper::toDto).toList();
     }
 
-    public ReservationDto getReservationByUserId(User userId) {
-        Reservation reservation = reservationRepository.findByUserId(userId).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
+    //pokud nedám list a v db existuje více rezervací u jednoho uživatele, tak mi to dropne
+    /*public List<ReservationDto> getReservationByUserId(User userId) {
+        List<Reservation> reservation = reservationRepository.findByUserId(userId).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
         //bylo potřeba to prohnat přes DTO, abych omezil informace, které se mi vrátí.
         return reservationMapper.toDto(reservation);
+    }*/
+
+    public List<ReservationDto> getReservationByUserId(User userId) {
+        List<Reservation> reservations = reservationRepository.findByUserId(userId);
+        if (reservations.isEmpty()) {
+            throw new ResourceNotFoundException("No reservations found for user with id " + userId);
+        }
+        return reservationMapper.toDtoList(reservations);
     }
 
     public void deleteReservation(Integer reservationId) {
@@ -44,10 +53,10 @@ public class ReservationService {
     }
 
     public ReservationDto updateReservation(Integer id, Reservation reservation) {
-        //Načtu rezervaci podle id
+        //načtu rezervaci podle id
         Reservation existingReservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Reservation not found"));
-        //Nastavit pouze pole, která chci aktualizovat
+        //nastavit pouze pole, která chci aktualizovat
         existingReservation.setStatus(reservation.getStatus());
         reservationRepository.save(existingReservation);
         return reservationMapper.toDto(existingReservation);

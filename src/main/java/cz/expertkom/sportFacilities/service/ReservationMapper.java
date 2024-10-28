@@ -10,6 +10,9 @@ import cz.expertkom.sportFacilities.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class ReservationMapper {
     private final UserRepository userRepository;
@@ -27,6 +30,12 @@ public class ReservationMapper {
         //dto.setContact(reservation.getContact());
         dto.setEmail(reservation.getUserId().getEmail());
         return dto;
+    }
+
+    public List<ReservationDto> toDtoList(List<Reservation> reservations) {
+        return reservations.stream()
+                .map(this::toDto)  //nefungoval toDto, takže pro List musím vrátit toDtoList
+                .collect(Collectors.toList());
     }
 
     @Autowired
