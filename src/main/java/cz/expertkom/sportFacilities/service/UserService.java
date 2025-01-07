@@ -1,5 +1,7 @@
 package cz.expertkom.sportFacilities.service;
 
+import cz.expertkom.sportFacilities.dto.FacilityDto;
+import cz.expertkom.sportFacilities.model.Facility;
 import cz.expertkom.sportFacilities.model.UserRole;
 import cz.expertkom.sportFacilities.model.User;
 import cz.expertkom.sportFacilities.dto.UserDto;
@@ -7,9 +9,14 @@ import cz.expertkom.sportFacilities.dto.UserRegisterDto;
 import cz.expertkom.sportFacilities.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Service
 @Slf4j
 public class UserService {
@@ -48,9 +55,30 @@ public class UserService {
 
 
         return userRepository.save(user);
-
-        //User userEntity = userMapper.toEntity(userRegisterDto);
-        //return userRepository.save(userEntity);
     }
 
+    //TODO - Update user - Error: NG04008
+    public UserDto updateUser(int id, UserRegisterDto userDto) {
+        User user = userMapper.toEntity(userDto);
+        user.setUserId(id); // původní ID dáme znovu do UserID
+        User updatedUser = userRepository.save(user);
+        return userMapper.toDto(updatedUser);
+    }
+
+    //TODO - Delete user - undefined je problém
+
+    public void deleteUserById(Integer id) {
+        log.info("#US&du01: deleteUserById called, id={}", id);
+
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid user ID");
+        }
+
+        if (!userRepository.existsById(id)) {
+            log.warn("#US&du02: User with id={} does not exist", id);
+            throw new IllegalArgumentException("User with id " + id + " does not exist");
+        }
+
+        userRepository.deleteById(id);
+    }
 }

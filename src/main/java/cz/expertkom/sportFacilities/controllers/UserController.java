@@ -1,13 +1,17 @@
 package cz.expertkom.sportFacilities.controllers;
+import cz.expertkom.sportFacilities.dto.FacilityDto;
 import cz.expertkom.sportFacilities.dto.UserDto;
 import cz.expertkom.sportFacilities.model.User;
 import cz.expertkom.sportFacilities.dto.UserRegisterDto;
 import cz.expertkom.sportFacilities.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController //provolávání jen z PostMana
@@ -34,4 +38,35 @@ public class UserController {
         log.info("#UC&gu01: getAllUsers called");
         return userService.getAll();
     }
-}
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable int id, @RequestBody UserRegisterDto userDto) {
+        log.info("User with ID: {}", id);
+        UserDto updatedUser = userService.updateUser(id, userDto); // Použití instance userService
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+        @DeleteMapping("/{id}")
+        public ResponseEntity<?> deleteUser(@PathVariable String id) {
+            log.info("#UC&du01: deleteUser called, id={}", id);
+
+            //Testování undefined problému
+            try {
+                int userId = Integer.parseInt(id);
+                log.info("#UC&du01: userID called, id={}", id);
+                userService.deleteUserById(userId);
+                return ResponseEntity.noContent().build();
+            } catch (NumberFormatException ex) {
+                    log.error("#UC&du02: Invalid ID format: {}", id);
+                    return ResponseEntity.badRequest().body(Map.of(
+                            "error", "Invalid user ID format",
+                            "providedValue", id,
+                            "expectedFormat", "Integer"
+                    ));
+
+            } catch (IllegalArgumentException ex) {
+                log.error("#UC&du03: {}", ex.getMessage());
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+            }
+        }
+    }

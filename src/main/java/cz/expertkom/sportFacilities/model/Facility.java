@@ -24,11 +24,11 @@ public class Facility {
     private String type;
     private String name;
 
-    @ManyToOne
+    @ManyToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name = "pricing_id")
     private Pricing pricing;
 
-    @ManyToOne
+    @ManyToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name = "manager_id")
     private User manager;
 

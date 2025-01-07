@@ -13,6 +13,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -31,19 +33,26 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("api/v1/login").permitAll()
-                        /*.requestMatchers(HttpMethod.POST, "/api/v1/reservation").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/reservation/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/reservation/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/reservation/**").hasRole("ADMIN")*/
-                        .anyRequest().authenticated())
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        http
+                .cors()
                 .and()
-                .httpBasic();
-
+                .csrf().disable();
         return http.build();
+
+        //http.csrf().disable()
+                //.authorizeHttpRequests(requests -> requests
+                        //.requestMatchers("api/v1/login").permitAll()
+                        //.requestMatchers(HttpMethod.POST, "/api/v1/reservation").hasRole("USER")
+                        //.requestMatchers(HttpMethod.GET, "/api/v1/reservation/**").hasRole("ADMIN")
+                        //.requestMatchers(HttpMethod.DELETE, "/api/v1/reservation/**").hasRole("ADMIN")
+                        //.requestMatchers(HttpMethod.PUT, "/api/v1/reservation/**").hasRole("ADMIN")
+                        //.anyRequest().authenticated())
+                //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                //.and()
+                //.httpBasic();
+
+
+        //return http.build();
     }
 
     @Bean
@@ -54,4 +63,6 @@ public class SecurityConfig {
                 .and()
                 .build();
     }
+
 }
+

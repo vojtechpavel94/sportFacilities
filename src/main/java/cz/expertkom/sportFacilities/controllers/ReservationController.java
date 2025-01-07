@@ -51,7 +51,7 @@ public class ReservationController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{reservationId}")
+    @PutMapping("/{reservationId}") //vyzkoušet si Patch
     public ResponseEntity<ReservationDto> updateReservation(@PathVariable Integer reservationId, @RequestBody Reservation reservation) {
         return new ResponseEntity<>(reservationService.updateReservation(reservationId, reservation), HttpStatus.OK);
     }
@@ -59,6 +59,5 @@ public class ReservationController {
     //vrátit rezervace pro uživatele, případně pak omožnost editovat rezervaci - DONE
     //update - DONE
     //delete - DONE
-
     //BONUS - vytvoření práv pro admin a běžné uživatele
 }

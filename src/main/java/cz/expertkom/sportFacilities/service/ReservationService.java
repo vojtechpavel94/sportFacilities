@@ -58,6 +58,8 @@ public class ReservationService {
                 .orElseThrow(() -> new ResourceNotFoundException("Reservation not found"));
         //nastavit pouze pole, která chci aktualizovat
         existingReservation.setStatus(reservation.getStatus());
+        existingReservation.setStartTime(reservation.getStartTime());
+        existingReservation.setEndTime(reservation.getEndTime());
         reservationRepository.save(existingReservation);
         return reservationMapper.toDto(existingReservation);
     }

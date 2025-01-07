@@ -21,11 +21,14 @@ public class UserMapper {
         User user = new User();
         user.setEmail(userDto.getEmail());
         user.setPasswordHash(userDto.getPassword());
-
-        /*user.setUsername(userDto.getUsername());
-        UserRole role = roleRepository.findById(userDto.getRoleId()).orElseThrow();
-        user.setRoleId(user.getRoleId());*/
-
         return user;
     }
+
+    //test
+    /*public User toEntity2(UserDto userDto) {
+        User user = new User();
+        user.setEmail(userDto.getEmail());
+        user.setPasswordHash(userDto.getPassword());
+        return user;
+    }*/
 }
